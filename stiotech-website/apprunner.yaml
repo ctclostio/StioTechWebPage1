@@ -1,0 +1,17 @@
+version: 1.0
+runtime: docker
+build:
+  commands:
+    build:
+      - echo "No build commands needed - using Dockerfile"
+run:
+  runtime-version: latest
+  command: nginx -g 'daemon off;'
+  network:
+    port: 8080
+    env: PORT
+  env:
+    - name: PORT
+      value: "8080"
+    - name: NGINX_WORKERS
+      value: "auto"

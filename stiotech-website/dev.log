@@ -1,0 +1,105 @@
+
+> stiotech-website@0.0.1 dev
+> astro dev --host
+
+16:15:25 [types] Generated 0ms
+16:15:25 [content] Syncing content
+16:15:25 [content] Synced content
+
+ astro  v5.9.3 ready in 231 ms
+
+┃ Local    http://localhost:4321/
+┃ Network  http://192.168.1.161:4321/
+
+16:15:25 watching for file changes...
+16:15:29 [200] / 22ms
+16:15:46 [200] / 6ms
+16:18:04 [200] /services 3ms
+16:18:08 [200] / 5ms
+16:19:46 [watch] src/pages/index.astro
+16:19:46 [watch] src/pages/index.astro
+16:19:46 [200] / 11ms
+16:19:55 [watch] src/pages/index.astro
+16:19:55 [watch] src/pages/index.astro
+16:19:55 [200] / 8ms
+16:20:04 [watch] src/pages/index.astro
+16:20:04 [watch] src/pages/index.astro
+16:20:05 [200] / 9ms
+16:20:15 [watch] src/pages/index.astro
+16:20:15 [watch] src/pages/index.astro
+16:20:15 [200] / 7ms
+16:20:30 [watch] src/pages/index.astro
+16:20:30 [watch] src/pages/index.astro
+16:20:30 [200] / 9ms
+16:20:57 [watch] /src/layouts/Layout.astro?astro&type=style&index=0&lang.css
+16:20:57 [watch] src/styles/global.css
+16:21:18 [watch] src/pages/index.astro
+16:21:18 [watch] src/pages/index.astro
+16:21:18 [200] / 8ms
+16:21:27 [watch] src/pages/index.astro
+16:21:27 [watch] src/pages/index.astro
+16:21:27 [200] / 5ms
+16:21:35 [watch] src/pages/index.astro
+16:21:35 [watch] src/pages/index.astro
+16:21:35 [200] / 5ms
+16:21:43 [watch] src/pages/index.astro
+16:21:43 [watch] src/pages/index.astro
+16:21:43 [200] / 11ms
+16:22:16 [watch] /src/layouts/Layout.astro?astro&type=style&index=0&lang.css
+16:22:16 [200] / 13ms
+16:22:23 [watch] /src/layouts/Layout.astro?astro&type=style&index=0&lang.css
+16:22:24 [200] / 17ms
+16:22:33 [watch] src/pages/index.astro
+16:22:33 [watch] src/pages/index.astro
+16:22:33 [200] / 8ms
+16:22:41 [watch] src/pages/index.astro
+16:22:41 [watch] src/pages/index.astro
+16:22:41 [200] / 8ms
+16:22:49 [watch] src/pages/index.astro
+16:22:49 [watch] src/pages/index.astro
+16:22:49 [200] / 5ms
+16:22:58 [watch] src/pages/index.astro
+16:22:58 [watch] src/pages/index.astro
+16:22:58 [200] / 6ms
+16:23:06 [watch] src/pages/index.astro
+16:23:06 [watch] src/pages/index.astro
+16:23:06 [200] / 5ms
+16:23:48 [watch] /src/layouts/Layout.astro?astro&type=style&index=0&lang.css
+16:23:48 [200] / 17ms
+16:23:55 [watch] /src/layouts/Layout.astro?astro&type=style&index=0&lang.css
+16:23:55 [200] / 20ms
+16:24:06 [watch] /src/layouts/Layout.astro?astro&type=style&index=0&lang.css
+16:24:06 [watch] src/styles/global.css
+16:24:58 [200] / 7ms
+16:26:20 [watch] /src/layouts/Layout.astro?astro&type=style&index=0&lang.css
+16:26:20 [watch] src/styles/global.css
+16:26:27 [watch] /src/layouts/Layout.astro?astro&type=style&index=0&lang.css
+16:26:28 [200] / 12ms
+16:26:28 [ERROR] CustomCursor is not defined
+  Stack trace:
+    at /home/gooner/GithubContributions/StioTech/stiotech-website/src/layouts/Layout.astro:1:1
+    [...] See full stack trace in the browser, or rerun with --verbose.
+16:26:35 [watch] /src/layouts/Layout.astro?astro&type=style&index=0&lang.css
+16:26:35 [200] / 12ms
+16:27:12 [200] / 5ms
+16:27:23 [200] /about 2ms
+16:27:24 [200] /services 4ms
+16:27:24 [200] /contact 2ms
+16:27:26 [200] / 4ms
+16:37:01 [200] / 4ms
+17:08:12 [200] / 5ms
+17:08:24 [200] / 2ms
+17:10:43 [200] / 4ms
+17:10:59 [200] / 3ms
+17:16:46 [watch] src/components/Footer.astro
+17:16:46 [watch] src/components/Footer.astro
+17:16:46 [200] / 8ms
+17:18:16 [watch] src/pages/index.astro
+17:18:16 [watch] src/pages/index.astro
+17:18:16 [200] / 10ms
+17:18:34 [200] / 4ms
+17:19:21 [200] / 5ms
+17:20:48 [watch] src/components/ProofPointsBar.astro
+17:20:48 [200] / 9ms
+17:21:20 [200] / 4ms
+17:21:26 [200] /contact 4ms

@@ -1,0 +1,60 @@
+---
+---
+
+<script>
+  const observerOptions = {
+    root: null,
+    rootMargin: '0px',
+    threshold: 0.1
+  };
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('animate-visible');
+        // Optional: stop observing after animation
+        // observer.unobserve(entry.target);
+      }
+    });
+  }, observerOptions);
+
+  // Observe all elements with scroll animation classes
+  document.addEventListener('DOMContentLoaded', () => {
+    const animatedElements = document.querySelectorAll('.scroll-fade-up, .scroll-fade-in, .scroll-slide-left, .scroll-slide-right, .scroll-scale');
+    animatedElements.forEach(el => observer.observe(el));
+  });
+</script>
+
+<style>
+  /* Scroll animations */
+  .scroll-fade-up,
+  .scroll-fade-in,
+  .scroll-slide-left,
+  .scroll-slide-right,
+  .scroll-scale {
+    opacity: 0;
+    transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .scroll-fade-up {
+    transform: translateY(50px);
+  }
+
+  .scroll-slide-left {
+    transform: translateX(-50px);
+  }
+
+  .scroll-slide-right {
+    transform: translateX(50px);
+  }
+
+  .scroll-scale {
+    transform: scale(0.8);
+  }
+
+  /* When visible */
+  .animate-visible {
+    opacity: 1 !important;
+    transform: translateY(0) translateX(0) scale(1) !important;
+  }
+</style>

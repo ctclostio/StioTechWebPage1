@@ -9,11 +9,11 @@ const navItems = [
 const currentPath = Astro.url.pathname;
 ---
 
-<nav class="bg-white shadow-sm sticky top-0 z-50">
+<nav class="sticky top-0 z-50 terminal-bg" style="background: rgba(10, 14, 26, 0.95); backdrop-filter: blur(10px); border-bottom: 1px solid var(--cyber-border);">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="flex justify-between items-center h-16">
       <div class="flex items-center">
-        <a href="/" class="text-2xl font-bold text-blue-600">StioTech</a>
+        <a href="/" class="text-2xl font-bold text-blue-400">StioTech</a>
       </div>
       
       <div class="hidden md:block">
@@ -21,11 +21,12 @@ const currentPath = Astro.url.pathname;
           {navItems.map((item) => (
             <a
               href={item.href}
-              class={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
+              class={`px-3 py-2 text-sm font-mono transition-all duration-300 ${
                 currentPath === item.href
-                  ? 'bg-blue-600 text-white'
-                  : 'text-gray-700 hover:bg-blue-50 hover:text-blue-600'
+                  ? 'text-green-400'
+                  : 'text-gray-400 hover:text-green-400'
               }`}
+              style={currentPath === item.href ? 'border-bottom: 2px solid var(--cyber-green);' : ''}
             >
               {item.name}
             </a>
@@ -36,7 +37,7 @@ const currentPath = Astro.url.pathname;
       <div class="md:hidden">
         <button
           type="button"
-          class="mobile-menu-button p-2 rounded-md text-gray-700 hover:bg-gray-100"
+          class="mobile-menu-button p-2 text-gray-400 hover:text-green-400 transition-colors"
           aria-label="Open menu"
         >
           <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -52,13 +53,13 @@ const currentPath = Astro.url.pathname;
       {navItems.map((item) => (
         <a
           href={item.href}
-          class={`block px-3 py-2 rounded-md text-base font-medium transition-colors ${
+          class={`block px-3 py-2 text-base font-mono transition-colors ${
             currentPath === item.href
-              ? 'bg-blue-600 text-white'
-              : 'text-gray-700 hover:bg-blue-50 hover:text-blue-600'
+              ? 'text-green-400'
+              : 'text-gray-400 hover:text-green-400'
           }`}
         >
-          {item.name}
+          [{item.name.toUpperCase()}]
         </a>
       ))}
     </div>

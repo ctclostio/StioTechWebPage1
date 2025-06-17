@@ -1,5 +1,29 @@
 @import "tailwindcss";
 
+/* Refined Cyber Theme Variables */
+:root {
+  --cyber-bg: #0f1419;
+  --cyber-bg-secondary: #1a1f2e;
+  --cyber-terminal: #0d1117;
+  --cyber-green: #58a6ff;
+  --cyber-cyan: #79c0ff;
+  --cyber-purple: #a371f7;
+  --cyber-red: #f85149;
+  --cyber-text: #c9d1d9;
+  --cyber-text-muted: #8b949e;
+  --cyber-border: #30363d;
+}
+
+body {
+  background-color: var(--cyber-bg);
+  color: var(--cyber-text);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+.font-mono {
+  font-family: 'Fira Code', 'Consolas', 'Monaco', monospace;
+}
+
 /* Animations */
 @keyframes fadeIn {
   from {
@@ -18,6 +42,66 @@
   }
   to {
     width: 100%;
+  }
+}
+
+@keyframes glitch {
+  0%, 100% {
+    text-shadow: 0.05em 0 0 var(--cyber-red), -0.05em -0.025em 0 var(--cyber-green), 0.025em 0.05em 0 var(--cyber-cyan);
+  }
+  15% {
+    text-shadow: 0.05em 0 0 var(--cyber-red), -0.05em -0.025em 0 var(--cyber-green), 0.025em 0.05em 0 var(--cyber-cyan);
+  }
+  16% {
+    text-shadow: -0.05em -0.025em 0 var(--cyber-red), 0.025em 0.025em 0 var(--cyber-green), -0.05em -0.05em 0 var(--cyber-cyan);
+  }
+  49% {
+    text-shadow: -0.05em -0.025em 0 var(--cyber-red), 0.025em 0.025em 0 var(--cyber-green), -0.05em -0.05em 0 var(--cyber-cyan);
+  }
+  50% {
+    text-shadow: 0.025em 0.05em 0 var(--cyber-red), 0.05em 0 0 var(--cyber-green), 0 -0.05em 0 var(--cyber-cyan);
+  }
+  99% {
+    text-shadow: 0.025em 0.05em 0 var(--cyber-red), 0.05em 0 0 var(--cyber-green), 0 -0.05em 0 var(--cyber-cyan);
+  }
+}
+
+@keyframes scanlines {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 0 10px;
+  }
+}
+
+@keyframes flicker {
+  0%, 100% {
+    opacity: 1;
+  }
+  41.99% {
+    opacity: 1;
+  }
+  42% {
+    opacity: 0;
+  }
+  43% {
+    opacity: 0;
+  }
+  43.01% {
+    opacity: 1;
+  }
+  47.99% {
+    opacity: 1;
+  }
+  48% {
+    opacity: 0;
+  }
+  49% {
+    opacity: 0;
+  }
+  49.01% {
+    opacity: 1;
   }
 }
 
@@ -126,4 +210,138 @@
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+}
+
+/* Cyber Theme Classes */
+.cyber-gradient {
+  background: linear-gradient(135deg, var(--cyber-bg) 0%, var(--cyber-bg-secondary) 100%);
+}
+
+.cyber-gradient-text {
+  background: linear-gradient(90deg, var(--cyber-green) 0%, var(--cyber-cyan) 50%, var(--cyber-purple) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.glitch {
+  position: relative;
+  animation: glitch 2s infinite;
+}
+
+.terminal-bg {
+  background: var(--cyber-terminal);
+  border: 1px solid var(--cyber-border);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  position: relative;
+}
+
+.terminal-bg::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(rgba(88, 166, 255, 0.01) 50%, transparent 50%);
+  background-size: 100% 4px;
+  animation: scanlines 12s linear infinite;
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+.cyber-button {
+  background: transparent;
+  border: 1px solid var(--cyber-green);
+  color: var(--cyber-green);
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s;
+}
+
+.cyber-button::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: var(--cyber-green);
+  transition: left 0.3s;
+  z-index: -1;
+}
+
+.cyber-button:hover {
+  color: var(--cyber-bg);
+  box-shadow: 0 2px 8px rgba(88, 166, 255, 0.4);
+}
+
+.cyber-button:hover::before {
+  left: 0;
+}
+
+.cyber-card {
+  background: rgba(15, 23, 41, 0.8);
+  border: 1px solid var(--cyber-border);
+  position: relative;
+  overflow: hidden;
+}
+
+.cyber-card::before {
+  content: "";
+  position: absolute;
+  top: -1px;
+  left: -1px;
+  right: -1px;
+  bottom: -1px;
+  background: linear-gradient(45deg, var(--cyber-green), var(--cyber-cyan));
+  background-size: 200%;
+  opacity: 0;
+  transition: opacity 0.3s;
+  z-index: -1;
+}
+
+.cyber-card:hover::before {
+  opacity: 0.3;
+}
+
+.terminal-text {
+  font-family: 'Fira Code', monospace;
+  color: var(--cyber-green);
+}
+
+.cursor-blink::after {
+  content: "_";
+  animation: blink 1s infinite;
+}
+
+.matrix-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: -1;
+}
+
+.matrix-bg::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: 
+    repeating-linear-gradient(0deg, 
+      transparent, 
+      transparent 2px, 
+      rgba(0, 255, 65, 0.03) 2px, 
+      rgba(0, 255, 65, 0.03) 4px);
+  animation: scanlines 8s linear infinite;
+}
+
+.flicker {
+  animation: flicker 3s linear infinite;
 }

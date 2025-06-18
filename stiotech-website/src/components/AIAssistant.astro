@@ -1,0 +1,367 @@
+---
+---
+
+<div class="ai-assistant-container">
+  <button class="ai-assistant-trigger" aria-label="Open AI Assistant">
+    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
+    </svg>
+    <span class="ai-assistant-badge"></span>
+  </button>
+  
+  <div class="ai-assistant-window" style="display: none;">
+    <div class="ai-assistant-header">
+      <div class="ai-status">
+        <span class="ai-status-dot"></span>
+        <span>StioTech AI Assistant</span>
+      </div>
+      <button class="ai-close" aria-label="Close AI Assistant">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+    </div>
+    
+    <div class="ai-messages">
+      <div class="ai-message ai-message-bot">
+        <div class="ai-avatar">AI</div>
+        <div class="ai-content">
+          <p>Hello! I'm the StioTech AI Assistant. How can I help you today?</p>
+          <div class="ai-suggestions">
+            <button class="ai-suggestion">Tell me about your services</button>
+            <button class="ai-suggestion">Get a security assessment</button>
+            <button class="ai-suggestion">Schedule a consultation</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="ai-input-container">
+      <input type="text" class="ai-input" placeholder="Type your message..." />
+      <button class="ai-send" aria-label="Send message">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+        </svg>
+      </button>
+    </div>
+  </div>
+</div>
+
+<style>
+  .ai-assistant-container {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    z-index: 1000;
+  }
+  
+  .ai-assistant-trigger {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--cyber-green) 0%, var(--cyber-cyan) 100%);
+    border: none;
+    color: var(--cyber-bg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 4px 20px rgba(88, 166, 255, 0.4);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+  }
+  
+  .ai-assistant-trigger:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 30px rgba(88, 166, 255, 0.6);
+  }
+  
+  .ai-assistant-badge {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 12px;
+    height: 12px;
+    background: var(--cyber-red);
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+  
+  .ai-assistant-window {
+    position: absolute;
+    bottom: 80px;
+    left: 0;
+    width: 380px;
+    height: 500px;
+    background: var(--cyber-terminal);
+    border: 1px solid var(--cyber-border);
+    border-radius: 16px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+    display: flex;
+    flex-direction: column;
+    animation: slideUp 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  @keyframes slideUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  .ai-assistant-header {
+    padding: 16px;
+    border-bottom: 1px solid var(--cyber-border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .ai-status {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--cyber-text);
+    font-size: 14px;
+    font-weight: 500;
+  }
+  
+  .ai-status-dot {
+    width: 8px;
+    height: 8px;
+    background: var(--cyber-green);
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+  
+  .ai-close {
+    background: none;
+    border: none;
+    color: var(--cyber-text-muted);
+    cursor: pointer;
+    padding: 4px;
+    transition: color 0.2s;
+  }
+  
+  .ai-close:hover {
+    color: var(--cyber-red);
+  }
+  
+  .ai-messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  
+  .ai-message {
+    display: flex;
+    gap: 12px;
+    animation: fadeIn 0.3s ease;
+  }
+  
+  .ai-message-user {
+    flex-direction: row-reverse;
+  }
+  
+  .ai-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--cyber-green) 0%, var(--cyber-cyan) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: bold;
+    color: var(--cyber-bg);
+    flex-shrink: 0;
+  }
+  
+  .ai-message-user .ai-avatar {
+    background: linear-gradient(135deg, var(--cyber-purple) 0%, var(--cyber-red) 100%);
+  }
+  
+  .ai-content {
+    flex: 1;
+    background: rgba(88, 166, 255, 0.1);
+    border: 1px solid rgba(88, 166, 255, 0.3);
+    border-radius: 12px;
+    padding: 12px;
+    color: var(--cyber-text);
+    font-size: 14px;
+    line-height: 1.5;
+  }
+  
+  .ai-message-user .ai-content {
+    background: rgba(189, 0, 255, 0.1);
+    border-color: rgba(189, 0, 255, 0.3);
+  }
+  
+  .ai-suggestions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 12px;
+  }
+  
+  .ai-suggestion {
+    background: none;
+    border: 1px solid var(--cyber-green);
+    color: var(--cyber-green);
+    padding: 6px 12px;
+    border-radius: 16px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  
+  .ai-suggestion:hover {
+    background: var(--cyber-green);
+    color: var(--cyber-bg);
+  }
+  
+  .ai-input-container {
+    padding: 16px;
+    border-top: 1px solid var(--cyber-border);
+    display: flex;
+    gap: 8px;
+  }
+  
+  .ai-input {
+    flex: 1;
+    background: rgba(88, 166, 255, 0.05);
+    border: 1px solid var(--cyber-border);
+    border-radius: 24px;
+    padding: 10px 16px;
+    color: var(--cyber-text);
+    font-size: 14px;
+    outline: none;
+    transition: all 0.2s;
+  }
+  
+  .ai-input:focus {
+    border-color: var(--cyber-green);
+    background: rgba(88, 166, 255, 0.1);
+  }
+  
+  .ai-send {
+    background: var(--cyber-green);
+    border: none;
+    color: var(--cyber-bg);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  
+  .ai-send:hover {
+    transform: scale(1.1);
+    background: var(--cyber-cyan);
+  }
+  
+  @media (max-width: 640px) {
+    .ai-assistant-window {
+      width: calc(100vw - 40px);
+      height: calc(100vh - 200px);
+      max-width: 380px;
+    }
+  }
+</style>
+
+<script>
+  const trigger = document.querySelector('.ai-assistant-trigger');
+  const window = document.querySelector('.ai-assistant-window') as HTMLElement;
+  const closeBtn = document.querySelector('.ai-close');
+  const input = document.querySelector('.ai-input') as HTMLInputElement;
+  const sendBtn = document.querySelector('.ai-send');
+  const messagesContainer = document.querySelector('.ai-messages');
+  const suggestions = document.querySelectorAll('.ai-suggestion');
+  
+  // Toggle window
+  trigger?.addEventListener('click', () => {
+    window.style.display = window.style.display === 'none' ? 'flex' : 'none';
+    if (window.style.display === 'flex') {
+      input?.focus();
+    }
+  });
+  
+  closeBtn?.addEventListener('click', () => {
+    window.style.display = 'none';
+  });
+  
+  // Handle messages
+  function addMessage(content: string, isUser: boolean = false) {
+    const messageDiv = document.createElement('div');
+    messageDiv.className = `ai-message ${isUser ? 'ai-message-user' : 'ai-message-bot'}`;
+    
+    messageDiv.innerHTML = `
+      <div class="ai-avatar">${isUser ? 'U' : 'AI'}</div>
+      <div class="ai-content">
+        <p>${content}</p>
+      </div>
+    `;
+    
+    messagesContainer?.appendChild(messageDiv);
+    messagesContainer?.scrollTo(0, messagesContainer.scrollHeight);
+  }
+  
+  function generateResponse(message: string): string {
+    const responses: { [key: string]: string } = {
+      'services': 'We offer comprehensive technology services including Strategic Consulting, Web Development, Mobile Solutions, Cloud Infrastructure, AI & Machine Learning, and 24/7 Support & Security. Would you like to learn more about any specific service?',
+      'security': 'Our security services include enterprise-grade encryption, zero-trust architecture, 24/7 monitoring, incident response, and regular security assessments. We can schedule a free security consultation for your organization.',
+      'consultation': 'I\'d be happy to help schedule a consultation! Please visit our contact page or call us directly. Our team typically responds within 24 hours.',
+      'default': 'I understand you\'re interested in learning more. Our team specializes in secure, cutting-edge technology solutions. How can I assist you specifically?'
+    };
+    
+    const lowerMessage = message.toLowerCase();
+    
+    for (const key in responses) {
+      if (lowerMessage.includes(key)) {
+        return responses[key];
+      }
+    }
+    
+    return responses.default;
+  }
+  
+  function sendMessage() {
+    const message = input?.value.trim();
+    if (!message) return;
+    
+    addMessage(message, true);
+    input.value = '';
+    
+    // Simulate typing delay
+    setTimeout(() => {
+      const response = generateResponse(message);
+      addMessage(response);
+    }, 1000);
+  }
+  
+  sendBtn?.addEventListener('click', sendMessage);
+  input?.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') {
+      sendMessage();
+    }
+  });
+  
+  // Handle suggestions
+  suggestions.forEach(suggestion => {
+    suggestion.addEventListener('click', () => {
+      const text = suggestion.textContent || '';
+      input.value = text;
+      sendMessage();
+    });
+  });
+</script>

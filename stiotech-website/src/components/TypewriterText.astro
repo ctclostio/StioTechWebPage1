@@ -1,0 +1,58 @@
+---
+export interface Props {
+  text: string;
+  speed?: number;
+  class?: string;
+}
+
+const { text, speed = 100, class: className = '' } = Astro.props;
+---
+
+<span class={`typewriter-text ${className}`} data-text={text} data-speed={speed}></span>
+
+<style>
+  .typewriter-text {
+    display: inline-block;
+  }
+  
+  .typewriter-text::after {
+    content: '|';
+    animation: blink 1s infinite;
+    color: var(--cyber-green);
+  }
+  
+  @keyframes blink {
+    0%, 50% { opacity: 1; }
+    51%, 100% { opacity: 0; }
+  }
+</style>
+
+<script>
+  const typewriterElements = document.querySelectorAll('.typewriter-text');
+  
+  typewriterElements.forEach((element) => {
+    const text = element.getAttribute('data-text') || '';
+    const speed = parseInt(element.getAttribute('data-speed') || '100');
+    let index = 0;
+    
+    function type() {
+      if (index < text.length) {
+        element.textContent = text.substring(0, index + 1);
+        index++;
+        setTimeout(type, speed);
+      }
+    }
+    
+    // Start typing when element is in view
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          type();
+          observer.unobserve(entry.target);
+        }
+      });
+    });
+    
+    observer.observe(element);
+  });
+</script>

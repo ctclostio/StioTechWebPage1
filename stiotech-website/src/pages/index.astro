@@ -2,6 +2,9 @@
 import Layout from '../layouts/Layout.astro';
 import ParticleBackground from '../components/ParticleBackground.astro';
 import ProofPointsBar from '../components/ProofPointsBar.astro';
+import GlitchText from '../components/GlitchText.astro';
+import Card3D from '../components/Card3D.astro';
+import ParallaxSection from '../components/ParallaxSection.astro';
 ---
 
 <style>
@@ -53,7 +56,7 @@ import ProofPointsBar from '../components/ProofPointsBar.astro';
           <div class="terminal-content">
             <p class="text-gray-500 font-mono text-sm mb-2">$ whoami</p>
             <h1 class="text-3xl md:text-5xl font-bold mb-4 cyber-gradient-text">
-              StioTech <span class="cursor-blink"></span>
+              <GlitchText text="StioTech" /> <span class="cursor-blink"></span>
             </h1>
             <p class="text-gray-500 font-mono text-sm mb-2">$ cat mission.txt</p>
             <p class="text-xl md:text-2xl text-gray-300 font-mono">
@@ -93,7 +96,8 @@ import ProofPointsBar from '../components/ProofPointsBar.astro';
       </div>
       
       <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-        <div class="cyber-card p-6 hover-lift rounded-lg scroll-fade-up transition-all duration-300">
+        <Card3D class="scroll-fade-up">
+          <div class="cyber-card p-6 rounded-lg transition-all duration-300">
           <div class="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 transition-transform duration-300 hover:scale-110" style="background: rgba(0, 255, 65, 0.1); border: 1px solid var(--cyber-green);">
             <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color: var(--cyber-green);">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
@@ -101,27 +105,32 @@ import ProofPointsBar from '../components/ProofPointsBar.astro';
           </div>
           <h3 class="text-xl font-semibold mb-2 text-blue-400">Fast & Efficient</h3>
           <p class="text-gray-400">Rapid deployment with enterprise-grade reliability</p>
-        </div>
-        
-        <div class="cyber-card p-6 hover-lift rounded-lg scroll-fade-up transition-all duration-300">
-          <div class="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 transition-transform duration-300 hover:scale-110" style="background: rgba(0, 240, 255, 0.1); border: 1px solid var(--cyber-cyan);">
-            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color: var(--cyber-cyan);">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-            </svg>
           </div>
-          <h3 class="text-xl font-semibold mb-2 text-cyan-400">Secure & Reliable</h3>
-          <p class="text-gray-400">Advanced encryption with zero-trust architecture</p>
-        </div>
+        </Card3D>
         
-        <div class="cyber-card p-6 hover-lift rounded-lg scroll-fade-up transition-all duration-300">
-          <div class="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 transition-transform duration-300 hover:scale-110" style="background: rgba(189, 0, 255, 0.1); border: 1px solid var(--cyber-purple);">
-            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color: var(--cyber-purple);">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
+        <Card3D class="scroll-fade-up">
+          <div class="cyber-card p-6 rounded-lg transition-all duration-300">
+            <div class="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 transition-transform duration-300 hover:scale-110" style="background: rgba(0, 240, 255, 0.1); border: 1px solid var(--cyber-cyan);">
+              <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color: var(--cyber-cyan);">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+              </svg>
+            </div>
+            <h3 class="text-xl font-semibold mb-2 text-cyan-400">Secure & Reliable</h3>
+            <p class="text-gray-400">Advanced encryption with zero-trust architecture</p>
           </div>
-          <h3 class="text-xl font-semibold mb-2 text-purple-400">Simple & Effective</h3>
-          <p class="text-gray-400">Streamlined solutions with maximum impact</p>
-        </div>
+        </Card3D>
+        
+        <Card3D class="scroll-fade-up">
+          <div class="cyber-card p-6 rounded-lg transition-all duration-300">
+            <div class="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 transition-transform duration-300 hover:scale-110" style="background: rgba(189, 0, 255, 0.1); border: 1px solid var(--cyber-purple);">
+              <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color: var(--cyber-purple);">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            </div>
+            <h3 class="text-xl font-semibold mb-2 text-purple-400">Simple & Effective</h3>
+            <p class="text-gray-400">Streamlined solutions with maximum impact</p>
+          </div>
+        </Card3D>
       </div>
     </div>
   </section>

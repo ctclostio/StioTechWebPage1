@@ -1,0 +1,104 @@
+---
+export interface Props {
+  class?: string;
+}
+
+const { class: className = '' } = Astro.props;
+---
+
+<div class={`card-3d-container ${className}`}>
+  <div class="card-3d">
+    <div class="card-3d-content">
+      <slot />
+    </div>
+    <div class="card-3d-shine"></div>
+  </div>
+</div>
+
+<style>
+  .card-3d-container {
+    perspective: 1000px;
+  }
+
+  .card-3d {
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: transform;
+  }
+
+  .card-3d-content {
+    position: relative;
+    z-index: 1;
+  }
+
+  .card-3d-shine {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(
+      105deg,
+      transparent 40%,
+      rgba(255, 255, 255, 0.07) 45%,
+      rgba(255, 255, 255, 0.1) 50%,
+      rgba(255, 255, 255, 0.07) 55%,
+      transparent 60%
+    );
+    opacity: 0;
+    transition: opacity 0.3s, transform 0.3s;
+    transform: translateX(-100%);
+    pointer-events: none;
+  }
+
+  .card-3d-container:hover .card-3d-shine {
+    opacity: 1;
+    transform: translateX(100%);
+  }
+
+  .card-3d::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(45deg, var(--cyber-green), var(--cyber-cyan), var(--cyber-purple));
+    border-radius: inherit;
+    opacity: 0;
+    transition: opacity 0.3s;
+    z-index: -1;
+    filter: blur(8px);
+  }
+
+  .card-3d-container:hover .card-3d::before {
+    opacity: 0.6;
+  }
+</style>
+
+<script>
+  const card3DContainers = document.querySelectorAll('.card-3d-container');
+  
+  card3DContainers.forEach((container) => {
+    const card = container.querySelector('.card-3d') as HTMLElement;
+    
+    container.addEventListener('mousemove', (e) => {
+      const rect = container.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      
+      const centerX = rect.width / 2;
+      const centerY = rect.height / 2;
+      
+      const rotateX = (y - centerY) / 10;
+      const rotateY = (centerX - x) / 10;
+      
+      card.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateZ(10px)`;
+    });
+    
+    container.addEventListener('mouseleave', () => {
+      card.style.transform = 'rotateX(0) rotateY(0) translateZ(0)';
+    });
+  });
+</script>

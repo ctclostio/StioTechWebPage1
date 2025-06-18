@@ -2,6 +2,10 @@
 import Navigation from '../components/Navigation.astro';
 import Footer from '../components/Footer.astro';
 import ScrollAnimation from '../components/ScrollAnimation.astro';
+import MagneticCursor from '../components/MagneticCursor.astro';
+import MetricsDisplay from '../components/MetricsDisplay.astro';
+import AIAssistant from '../components/AIAssistant.astro';
+import { ViewTransitions } from 'astro:transitions';
 
 export interface Props {
   title: string;
@@ -23,6 +27,7 @@ const { title, description = "StioTech - Innovative Technology Solutions" } = As
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
+    <ViewTransitions />
   </head>
   <body class="font-sans min-h-screen flex flex-col">
     <Navigation />
@@ -31,6 +36,9 @@ const { title, description = "StioTech - Innovative Technology Solutions" } = As
     </main>
     <Footer />
     <ScrollAnimation />
+    <MagneticCursor />
+    <MetricsDisplay />
+    <AIAssistant />
   </body>
 </html>
 

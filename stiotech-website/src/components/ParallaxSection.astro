@@ -1,0 +1,52 @@
+---
+export interface Props {
+  speed?: number;
+  class?: string;
+}
+
+const { speed = 0.5, class: className = '' } = Astro.props;
+---
+
+<div class={`parallax-section ${className}`} data-speed={speed}>
+  <slot />
+</div>
+
+<style>
+  .parallax-section {
+    position: relative;
+    transform-style: preserve-3d;
+    will-change: transform;
+  }
+</style>
+
+<script>
+  const parallaxElements = document.querySelectorAll('.parallax-section');
+  
+  let ticking = false;
+  
+  function updateParallax() {
+    const scrolled = window.pageYOffset;
+    
+    parallaxElements.forEach((element) => {
+      const speed = parseFloat(element.getAttribute('data-speed') || '0.5');
+      const yPos = -(scrolled * speed);
+      
+      (element as HTMLElement).style.transform = `translate3d(0, ${yPos}px, 0)`;
+    });
+    
+    ticking = false;
+  }
+  
+  function requestTick() {
+    if (!ticking) {
+      window.requestAnimationFrame(updateParallax);
+      ticking = true;
+    }
+  }
+  
+  window.addEventListener('scroll', requestTick);
+  window.addEventListener('resize', requestTick);
+  
+  // Initial call
+  updateParallax();
+</script>

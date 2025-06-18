@@ -103,3 +103,40 @@
 17:20:48 [200] / 9ms
 17:21:20 [200] / 4ms
 17:21:26 [200] /contact 4ms
+23:10:05 [watch] src/pages/index.astro
+23:10:05 [watch] src/pages/index.astro
+23:32:02 [watch] vercel.json
+23:32:02 [watch] vercel.json
+23:47:44 [watch] src/pages/index.astro
+23:47:44 [watch] src/pages/index.astro
+23:48:39 [watch] /src/layouts/Layout.astro?astro&type=style&index=0&lang.css
+23:48:39 [watch] src/styles/global.css
+23:49:40 [watch] src/pages/index.astro
+23:49:40 [watch] src/pages/index.astro
+23:50:29 [watch] src/pages/index.astro
+23:50:29 [watch] src/pages/index.astro
+23:51:20 [watch] src/components/ProofPointsBar.astro
+23:51:34 [watch] /src/layouts/Layout.astro?astro&type=style&index=0&lang.css
+23:51:58 [watch] src/components/Navigation.astro
+23:51:58 [watch] src/components/Navigation.astro
+23:52:17 [watch] src/components/ParticleBackground.astro
+23:52:17 [watch] src/components/ParticleBackground.astro
+23:52:26 [watch] src/components/ParticleBackground.astro
+23:52:26 [watch] src/components/ParticleBackground.astro
+23:59:44 [watch] /src/layouts/Layout.astro?astro&type=style&index=0&lang.css
+23:59:44 [watch] src/styles/global.css
+00:00:25 [watch] src/pages/index.astro
+00:00:25 [watch] src/pages/index.astro
+00:01:22 [watch] src/pages/index.astro
+00:01:22 [watch] src/pages/index.astro
+00:01:41 [watch] src/components/ProofPointsBar.astro
+00:01:58 [watch] src/components/Navigation.astro
+00:01:58 [watch] src/components/Navigation.astro
+00:02:04 [watch] src/components/Navigation.astro
+00:02:04 [watch] src/components/Navigation.astro
+00:02:16 [watch] src/components/ParticleBackground.astro
+00:02:16 [watch] src/components/ParticleBackground.astro
+00:02:26 [watch] src/pages/index.astro
+00:02:26 [watch] src/pages/index.astro
+00:09:54 [watch] aws/dist/awscli/customizations/sso/index.html
+17:07:30 [watch] src/components/ProofPointsBar.astro

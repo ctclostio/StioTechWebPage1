@@ -163,3 +163,6 @@
 17:23:08 [watch] src/styles/global.css
 17:24:44 [watch] /src/layouts/Layout.astro?astro&type=style&index=0&lang.css
 17:24:51 [watch] /src/layouts/Layout.astro?astro&type=style&index=0&lang.css
+00:06:01 [200] / 53ms
+00:06:18 [watch] .claude/settings.local.json
+00:06:18 [watch] .claude/settings.local.json

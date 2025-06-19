@@ -4,46 +4,112 @@
 <canvas id="particles-canvas" class="absolute inset-0 w-full h-full"></canvas>
 
 <script>
-  const canvas = document.getElementById('particles-canvas') as HTMLCanvasElement;
-  const ctx = canvas.getContext('2d')!;
-  
+  let animationId: number | null = null;
   let particles: Particle[] = [];
   let mouseX = 0;
   let mouseY = 0;
+  let magneticFieldStrength = 80;
   
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
-  
-  class Particle {
-    x: number;
-    y: number;
-    size: number;
-    speedX: number;
-    speedY: number;
-    opacity: number;
-    
-    constructor() {
-      this.x = Math.random() * canvas.width;
-      this.y = Math.random() * canvas.height;
-      this.size = Math.random() * 2 + 0.5;
-      this.speedX = Math.random() * 2 - 1;
-      this.speedY = Math.random() * 2 - 1;
-      this.opacity = Math.random() * 0.3 + 0.1;
+  function setupParticles() {
+    // Cancel any existing animation
+    if (animationId) {
+      cancelAnimationFrame(animationId);
+      animationId = null;
     }
     
-    update() {
-      this.x += this.speedX;
-      this.y += this.speedY;
+    const canvas = document.getElementById('particles-canvas') as HTMLCanvasElement;
+    if (!canvas) return;
+    
+    const ctx = canvas.getContext('2d')!;
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  
+    class Particle {
+      x: number;
+      y: number;
+      size: number;
+      speedX: number;
+      speedY: number;
+      opacity: number;
+      color: string;
+      directionChangeTimer: number;
+      baseSpeedX: number;
+      baseSpeedY: number;
       
-      // Mouse interaction
+      constructor() {
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * canvas.height;
+        this.size = Math.random() * 2 + 0.5;
+        this.baseSpeedX = (Math.random() - 0.5) * 1.5;
+        this.baseSpeedY = (Math.random() - 0.5) * 1.5;
+        this.speedX = this.baseSpeedX;
+        this.speedY = this.baseSpeedY;
+        this.opacity = Math.random() * 0.3 + 0.1;
+        this.directionChangeTimer = Math.random() * 200 + 100;
+        const colors = ['0, 255, 65', '0, 240, 255', '189, 0, 255'];
+        this.color = colors[Math.floor(Math.random() * colors.length)];
+      }
+    
+    update() {
+      // Autonomous movement with random direction changes
+      this.directionChangeTimer--;
+      if (this.directionChangeTimer <= 0) {
+        // Random direction change
+        const angleChange = (Math.random() - 0.5) * Math.PI;
+        const currentAngle = Math.atan2(this.baseSpeedY, this.baseSpeedX);
+        const newAngle = currentAngle + angleChange;
+        const speed = Math.sqrt(this.baseSpeedX * this.baseSpeedX + this.baseSpeedY * this.baseSpeedY);
+        
+        this.baseSpeedX = Math.cos(newAngle) * speed;
+        this.baseSpeedY = Math.sin(newAngle) * speed;
+        this.directionChangeTimer = Math.random() * 300 + 100;
+      }
+      
+      // Add slight random wobble for organic movement
+      const wobbleX = (Math.random() - 0.5) * 0.1;
+      const wobbleY = (Math.random() - 0.5) * 0.1;
+      
+      // Apply base movement
+      this.speedX = this.baseSpeedX + wobbleX;
+      this.speedY = this.baseSpeedY + wobbleY;
+      
+      // Magnetic field interaction
       const dx = mouseX - this.x;
       const dy = mouseY - this.y;
       const distance = Math.sqrt(dx * dx + dy * dy);
       
-      if (distance < 100) {
-        const force = (100 - distance) / 100;
-        this.x -= dx * force * 0.02;
-        this.y -= dy * force * 0.02;
+      if (distance < magneticFieldStrength && distance > 0) {
+        // Magnetic field effect - particles spiral around cursor
+        const force = (magneticFieldStrength - distance) / magneticFieldStrength;
+        
+        // Create perpendicular force for spiral motion
+        const angle = Math.atan2(dy, dx);
+        const spiralAngle = angle + Math.PI / 2; // 90 degrees perpendicular
+        
+        // Combine attraction and spiral motion
+        const attractionForce = force * 0.008;
+        const spiralForce = force * 0.01;
+        
+        // Apply forces
+        this.speedX += dx / distance * attractionForce;
+        this.speedY += dy / distance * attractionForce;
+        this.speedX += Math.cos(spiralAngle) * spiralForce;
+        this.speedY += Math.sin(spiralAngle) * spiralForce;
+      }
+      
+      // Update position
+      this.x += this.speedX;
+      this.y += this.speedY;
+      
+      // Ensure minimum speed
+      const currentSpeed = Math.sqrt(this.speedX * this.speedX + this.speedY * this.speedY);
+      const minSpeed = 0.3;
+      if (currentSpeed < minSpeed) {
+        const randomAngle = Math.random() * Math.PI * 2;
+        this.speedX = Math.cos(randomAngle) * minSpeed;
+        this.speedY = Math.sin(randomAngle) * minSpeed;
+        this.baseSpeedX = this.speedX;
+        this.baseSpeedY = this.speedY;
       }
       
       // Wrap around edges
@@ -53,29 +119,24 @@
       if (this.y < 0) this.y = canvas.height;
     }
     
-    draw() {
-      const colors = ['0, 255, 65', '0, 240, 255', '189, 0, 255'];
-      const color = colors[Math.floor(Math.random() * colors.length)];
-      ctx.fillStyle = `rgba(${color}, ${this.opacity})`;
-      ctx.shadowBlur = 5;
-      ctx.shadowColor = `rgba(${color}, 0.2)`;
-      ctx.beginPath();
-      ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-      ctx.fill();
-      ctx.shadowBlur = 0;
+      draw() {
+        ctx.fillStyle = `rgba(${this.color}, ${this.opacity})`;
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fill();
+      }
     }
-  }
   
-  function init() {
-    particles = [];
-    const particleCount = Math.floor((canvas.width * canvas.height) / 8000);
-    for (let i = 0; i < particleCount; i++) {
-      particles.push(new Particle());
+    function init() {
+      particles = [];
+      const particleCount = Math.floor((canvas.width * canvas.height) / 12000);
+      for (let i = 0; i < particleCount; i++) {
+        particles.push(new Particle());
+      }
     }
-  }
-  
-  function animate() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    
+    function animate() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
     
     // Draw connections
     particles.forEach((particle, i) => {
@@ -84,9 +145,17 @@
         const dy = particle.y - particle2.y;
         const distance = Math.sqrt(dx * dx + dy * dy);
         
-        if (distance < 100) {
-          ctx.strokeStyle = `rgba(88, 166, 255, ${0.1 * (1 - distance / 100)})`;
-          ctx.lineWidth = 0.5;
+        if (distance < 150) {
+          // Enhanced connection effect near mouse
+          const mouseDist1 = Math.sqrt((mouseX - particle.x) ** 2 + (mouseY - particle.y) ** 2);
+          const mouseDist2 = Math.sqrt((mouseX - particle2.x) ** 2 + (mouseY - particle2.y) ** 2);
+          const mouseInfluence = Math.max(0, 1 - Math.min(mouseDist1, mouseDist2) / magneticFieldStrength);
+          
+          const baseOpacity = 0.1 * (1 - distance / 120);
+          const finalOpacity = baseOpacity + mouseInfluence * 0.2;
+          
+          ctx.strokeStyle = `rgba(88, 166, 255, ${finalOpacity})`;
+          ctx.lineWidth = 0.5 + mouseInfluence;
           ctx.beginPath();
           ctx.moveTo(particle.x, particle.y);
           ctx.lineTo(particle2.x, particle2.y);
@@ -98,21 +167,45 @@
       particle.draw();
     });
     
-    requestAnimationFrame(animate);
+      animationId = requestAnimationFrame(animate);
+    }
+    
+    init();
+    animate();
   }
   
   window.addEventListener('resize', () => {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-    init();
+    setupParticles();
   });
   
   window.addEventListener('mousemove', (e) => {
-    const rect = canvas.getBoundingClientRect();
-    mouseX = e.clientX - rect.left;
-    mouseY = e.clientY - rect.top;
+    const canvas = document.getElementById('particles-canvas') as HTMLCanvasElement;
+    if (canvas) {
+      const rect = canvas.getBoundingClientRect();
+      mouseX = e.clientX - rect.left;
+      mouseY = e.clientY - rect.top;
+      
+      // Use global mouse position if available
+      if (window.globalMouseX !== undefined && window.globalMouseY !== undefined) {
+        mouseX = window.globalMouseX - rect.left;
+        mouseY = window.globalMouseY - rect.top;
+      }
+    }
   });
   
-  init();
-  animate();
+  // Handle Astro view transitions
+  document.addEventListener('astro:page-load', () => {
+    setupParticles();
+  });
+  
+  // Initial setup
+  setupParticles();
+  
+  // Declare global types
+  declare global {
+    interface Window {
+      globalMouseX?: number;
+      globalMouseY?: number;
+    }
+  }
 </script>

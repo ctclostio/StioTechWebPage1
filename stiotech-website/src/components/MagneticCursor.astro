@@ -1,82 +1,14 @@
 ---
 ---
 
-<div class="magnetic-cursor"></div>
-<div class="cursor-follower"></div>
-<div class="cursor-trail"></div>
-
-<style>
-  .magnetic-cursor,
-  .cursor-follower,
-  .cursor-trail {
-    position: fixed;
-    pointer-events: none;
-    z-index: 9999;
-    display: none;
-  }
-
-  @media (hover: hover) and (pointer: fine) {
-    .magnetic-cursor {
-      width: 12px;
-      height: 12px;
-      background: radial-gradient(circle, var(--cyber-green) 0%, transparent 70%);
-      border-radius: 50%;
-      display: block;
-      transform: translate(-50%, -50%);
-      transition: transform 0.1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-      mix-blend-mode: screen;
-    }
-
-    .cursor-follower {
-      width: 40px;
-      height: 40px;
-      border: 2px solid rgba(88, 166, 255, 0.3);
-      border-radius: 50%;
-      display: block;
-      transform: translate(-50%, -50%);
-      transition: all 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-      backdrop-filter: blur(2px);
-    }
-
-    .cursor-trail {
-      width: 200px;
-      height: 200px;
-      background: radial-gradient(circle, rgba(88, 166, 255, 0.05) 0%, transparent 70%);
-      border-radius: 50%;
-      display: block;
-      transform: translate(-50%, -50%);
-      transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    }
-
-    .cursor-hover {
-      transform: translate(-50%, -50%) scale(2);
-      background: radial-gradient(circle, var(--cyber-cyan) 0%, transparent 70%);
-    }
-
-    .cursor-follower-hover {
-      transform: translate(-50%, -50%) scale(1.5);
-      background-color: rgba(88, 166, 255, 0.1);
-      border-color: var(--cyber-cyan);
-    }
-
-    .magnetic-active {
-      transition: none !important;
-    }
-  }
-</style>
+<!-- Magnetic cursor effects without custom cursor visuals -->
 
 <script>
-  if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
-    const cursor = document.querySelector('.magnetic-cursor') as HTMLDivElement;
-    const follower = document.querySelector('.cursor-follower') as HTMLDivElement;
-    const trail = document.querySelector('.cursor-trail') as HTMLDivElement;
-    
-    let mouseX = 0;
-    let mouseY = 0;
-    let followerX = 0;
-    let followerY = 0;
-    let trailX = 0;
-    let trailY = 0;
+  function setupMagneticCursor() {
+    if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+    // Global mouse position for particle effects
+    window.globalMouseX = 0;
+    window.globalMouseY = 0;
     
     // Magnetic effect variables
     const magneticElements: NodeListOf<Element> = document.querySelectorAll('.cyber-button, .hover-lift, .cyber-card');
@@ -84,20 +16,17 @@
     const magneticRange = 100;
     
     document.addEventListener('mousemove', (e) => {
-      mouseX = e.clientX;
-      mouseY = e.clientY;
+      window.globalMouseX = e.clientX;
+      window.globalMouseY = e.clientY;
       
-      cursor.style.left = mouseX + 'px';
-      cursor.style.top = mouseY + 'px';
-      
-      // Magnetic effect
+      // Magnetic effect on elements
       magneticElements.forEach((element) => {
         const rect = element.getBoundingClientRect();
         const centerX = rect.left + rect.width / 2;
         const centerY = rect.top + rect.height / 2;
         
-        const deltaX = mouseX - centerX;
-        const deltaY = mouseY - centerY;
+        const deltaX = e.clientX - centerX;
+        const deltaY = e.clientY - centerY;
         const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
         
         if (distance < magneticRange) {
@@ -106,61 +35,39 @@
           const translateY = deltaY * force * magneticStrength;
           
           (element as HTMLElement).style.transform = `translate(${translateX}px, ${translateY}px) translateY(-8px)`;
-          cursor.classList.add('magnetic-active');
+          (element as HTMLElement).style.transition = 'transform 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
         } else {
           (element as HTMLElement).style.transform = '';
-          cursor.classList.remove('magnetic-active');
         }
       });
     });
     
-    // Smooth follower animation
-    const animateFollower = () => {
-      followerX += (mouseX - followerX) * 0.1;
-      followerY += (mouseY - followerY) * 0.1;
-      
-      follower.style.left = followerX + 'px';
-      follower.style.top = followerY + 'px';
-      
-      // Trail animation
-      trailX += (mouseX - trailX) * 0.02;
-      trailY += (mouseY - trailY) * 0.02;
-      
-      trail.style.left = trailX + 'px';
-      trail.style.top = trailY + 'px';
-      
-      requestAnimationFrame(animateFollower);
-    };
-    animateFollower();
-    
-    // Add hover effects
+    // Add enhanced hover effects
     const hoverElements = document.querySelectorAll('a, button, .hover-lift, .cyber-button, .cyber-card');
     hoverElements.forEach(el => {
       el.addEventListener('mouseenter', () => {
-        cursor.classList.add('cursor-hover');
-        follower.classList.add('cursor-follower-hover');
+        document.body.style.cursor = 'pointer';
       });
       
       el.addEventListener('mouseleave', () => {
-        cursor.classList.remove('cursor-hover');
-        follower.classList.remove('cursor-follower-hover');
+        document.body.style.cursor = 'default';
       });
     });
-    
-    // Hide default cursor
-    document.body.style.cursor = 'none';
-    
-    // Handle cursor visibility
-    document.addEventListener('mouseleave', () => {
-      cursor.style.display = 'none';
-      follower.style.display = 'none';
-      trail.style.display = 'none';
-    });
-    
-    document.addEventListener('mouseenter', () => {
-      cursor.style.display = 'block';
-      follower.style.display = 'block';
-      trail.style.display = 'block';
-    });
+  }
+  
+  // Handle Astro view transitions
+  document.addEventListener('astro:page-load', () => {
+    setupMagneticCursor();
+  });
+  
+  // Initial setup
+  setupMagneticCursor();
+  
+  // Declare global types
+  declare global {
+    interface Window {
+      globalMouseX: number;
+      globalMouseY: number;
+    }
   }
 </script>
